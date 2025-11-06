@@ -34,7 +34,7 @@ body {
   animation: animationName 13s ease infinite;
   margin: 0;
   padding: 20px;
-  color: #fff;s=
+  color: #fff;s
   min-height: 100vh;
   line-height: 1.6;
   font-weight: 300;
@@ -332,6 +332,7 @@ button:hover {
 .text-center {
   text-align: center;
   opacity: 0;
+    color: black;
   transform: translateY(100vh);
   animation: followUp 1.2s ease-out forwards;
   animation-delay: 0.6s;
