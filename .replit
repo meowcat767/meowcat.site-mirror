@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 entrypoint = "index.html"
 modules = ["web"]
 
@@ -31,3 +32,40 @@ externalPort = 80
 
 [agent]
 expertMode = true
+=======
+modules = ["nodejs-20", "web"]
+
+[nix]
+channel = "stable-25_05"
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Static Website Server"
+
+[[workflows.workflow]]
+name = "Static Website Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npx serve -s . -l 5000 "
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+>>>>>>> e26b623477e0392dc1f4421b7f114148d5bae123
