@@ -110,7 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
     "Cats have 32 muscles in each ear",
     "A cat can jump 6x its length",
     "Cats spend 30-50% awake grooming",
-    "A cat's nose print is unique"
+    "A cat's nose print is unique",
+    "I am in your walls",
+    "Java is better than Python",
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "I am a knockoff Hitori Gotoh"
   ];
   
   const factElement = document.getElementById('randomFact');
