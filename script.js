@@ -189,18 +189,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Sound effect for link clicks
-  const clickSound = new Audio('click.mp3');
-  
-  const allLinks = document.querySelectorAll('a');
-  
-  allLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      // Play sound but don't block navigation
-      clickSound.currentTime = 0;
-      clickSound.play().catch(() => {});
-    });
-  });
+  // Sound effect for link clicks - removed to fix navigation issues
+  // Links now work without any JavaScript interference
   
   // Add parallax effect to cards
   const cards = document.querySelectorAll('.nav-card');
