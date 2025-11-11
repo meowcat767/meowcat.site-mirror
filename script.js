@@ -192,10 +192,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Sound effect for link clicks - removed to fix navigation issues
   // Links now work without any JavaScript interference
   
-  // Add parallax effect to cards
+  // Add parallax effect to cards - without interfering with links
   const cards = document.querySelectorAll('.nav-card');
   cards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
+      // Don't apply effect if hovering over a link
+      if (e.target.closest('.card-link')) {
+        return;
+      }
+      
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -211,6 +216,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
+    });
+    
+    // Ensure links within cards are clickable
+    const cardLinks = card.querySelectorAll('.card-link');
+    cardLinks.forEach(link => {
+      link.style.pointerEvents = 'auto';
+      link.style.position = 'relative';
+      link.style.zIndex = '10';
     });
   });
 });
