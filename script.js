@@ -87,22 +87,6 @@ if (canvas) {
 
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
-  // Visitor Counter
-  let visitorCount = Math.floor(Math.random() * 1000) + 100;
-  const visitorElement = document.getElementById('visitorCount');
-  if (visitorElement) {
-    let currentCount = 0;
-    const countInterval = setInterval(() => {
-      if (currentCount < visitorCount) {
-        currentCount += Math.ceil(visitorCount / 50);
-        if (currentCount > visitorCount) currentCount = visitorCount;
-        visitorElement.textContent = currentCount.toLocaleString();
-      } else {
-        clearInterval(countInterval);
-      }
-    }, 30);
-  }
-  
   // Clock
   function updateClock() {
     const now = new Date();
