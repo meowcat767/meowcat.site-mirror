@@ -1,3 +1,5 @@
+##THIS FILE CAN BE DELETED##
+
 entrypoint = "index.html"
 modules = ["web", "nodejs-20"]
 
