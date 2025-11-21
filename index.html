@@ -240,6 +240,45 @@
 
     <script src="script.js"></script>
     <script>
+      // Ensure clock and facts initialize even if script.js fails
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const clockEl = document.getElementById('clockTime');
+          const factEl = document.getElementById('randomFact');
+          
+          if (clockEl && clockEl.textContent === '00:00:00') {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            clockEl.textContent = h + ':' + m + ':' + s;
+            setInterval(function() {
+              const now = new Date();
+              const h = String(now.getHours()).padStart(2, '0');
+              const m = String(now.getMinutes()).padStart(2, '0');
+              const s = String(now.getSeconds()).padStart(2, '0');
+              clockEl.textContent = h + ':' + m + ':' + s;
+            }, 1000);
+          }
+          
+          if (factEl && factEl.textContent === 'Loading...') {
+            const facts = [
+              "Cats sleep 70% of their lives",
+              "A group of cats is called a clowder",
+              "Cats can rotate their ears 180°",
+              "A cat's purr vibrates at 25-150 Hz",
+              "Cats have 32 muscles in each ear",
+              "A cat can jump 6x its length",
+              "Cats spend 30-50% of awake time grooming",
+              "A cat's nose print is unique",
+              "Java is better than Python",
+              "I am a knockoff Hitori Gotoh"
+            ];
+            factEl.textContent = facts[Math.floor(Math.random() * facts.length)];
+          }
+        }, 500);
+      });
+      
       // Maintenance status check
       async function checkMaintenanceStatus() {
         try {

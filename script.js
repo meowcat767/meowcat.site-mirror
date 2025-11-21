@@ -104,75 +104,97 @@ if (canvas) {
 }
 
 // ============================================
-// Clock and Facts - Run immediately or on DOM ready
+// Clock and Facts - Initialize when DOM is ready
 // ============================================
 
-function initClockAndFacts() {
-  // ============================================
-  // Clock
-  // ============================================
+(function() {
+  'use strict';
   
-  function updateClock() {
-    const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+  // Wait for DOM to be fully loaded
+  function initClockAndFacts() {
+    // ============================================
+    // Clock
+    // ============================================
+    
     const clockElement = document.getElementById('clockTime');
     
     if (clockElement) {
-      clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+      function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+      }
+      
+      // Update immediately
+      updateClock();
+      // Then update every second
+      setInterval(updateClock, 1000);
+    }
+    
+    // ============================================
+    // Random Facts
+    // ============================================
+    
+    const facts = [
+      "Cats sleep 70% of their lives",
+      "A group of cats is called a clowder",
+      "Cats can rotate their ears 180°",
+      "A cat's purr vibrates at 25-150 Hz",
+      "Cats have 32 muscles in each ear",
+      "A cat can jump 6x its length",
+      "Cats spend 30-50% of awake time grooming",
+      "A cat's nose print is unique",
+      "Java is better than Python",
+      "I am a knockoff Hitori Gotoh"
+    ];
+    
+    const factElement = document.getElementById('randomFact');
+    
+    if (factElement) {
+      // Set initial fact immediately
+      const randomFact = facts[Math.floor(Math.random() * facts.length)];
+      factElement.textContent = randomFact;
+      factElement.style.transition = 'opacity 0.3s ease';
+      factElement.style.opacity = '1';
+      
+      // Update fact every 10 seconds
+      setInterval(function() {
+        const newFact = facts[Math.floor(Math.random() * facts.length)];
+        factElement.style.opacity = '0';
+        setTimeout(function() {
+          factElement.textContent = newFact;
+          factElement.style.opacity = '1';
+        }, 300);
+      }, 10000);
     }
   }
   
-  // Update immediately
-  updateClock();
-  // Then update every second
-  setInterval(updateClock, 1000);
+  // Run when DOM is ready with retry mechanism
+  let retryCount = 0;
+  const maxRetries = 50; // 5 seconds max wait time
   
-  // ============================================
-  // Random Facts
-  // ============================================
-  
-  const facts = [
-    "Cats sleep 70% of their lives",
-    "A group of cats is called a clowder",
-    "Cats can rotate their ears 180°",
-    "A cat's purr vibrates at 25-150 Hz",
-    "Cats have 32 muscles in each ear",
-    "A cat can jump 6x its length",
-    "Cats spend 30-50% of awake time grooming",
-    "A cat's nose print is unique",
-    "Java is better than Python",
-    "I am a knockoff Hitori Gotoh"
-  ];
-  
-  const factElement = document.getElementById('randomFact');
-  if (factElement) {
-    // Set initial fact immediately
-    const randomFact = facts[Math.floor(Math.random() * facts.length)];
-    factElement.textContent = randomFact;
-    factElement.style.transition = 'opacity 0.3s ease';
-    factElement.style.opacity = '1';
+  function tryInit() {
+    const clockElement = document.getElementById('clockTime');
+    const factElement = document.getElementById('randomFact');
     
-    // Update fact every 10 seconds
-    setInterval(() => {
-      const newFact = facts[Math.floor(Math.random() * facts.length)];
-      factElement.style.opacity = '0';
-      setTimeout(() => {
-        factElement.textContent = newFact;
-        factElement.style.opacity = '1';
-      }, 300);
-    }, 10000);
+    if (clockElement && factElement) {
+      initClockAndFacts();
+    } else if (retryCount < maxRetries) {
+      // Elements not found yet, try again after a short delay
+      retryCount++;
+      setTimeout(tryInit, 100);
+    }
   }
-}
-
-// Run immediately if DOM is already loaded, otherwise wait
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initClockAndFacts);
-} else {
-  // DOM is already loaded
-  initClockAndFacts();
-}
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit);
+  } else {
+    // DOM is already loaded, try immediately
+    tryInit();
+  }
+})();
 
 // ============================================
 // DOM Content Loaded - Other functionality
